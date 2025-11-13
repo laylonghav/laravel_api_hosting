@@ -8,12 +8,12 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    libssl-dev \        #  Add this line
+    libssl-dev \
     zip \
     unzip \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-# Install MongoDB extension with SSL support
+# Install MongoDB extension with SSL/TLS support
 RUN pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
@@ -26,7 +26,7 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
 # Generate Laravel app key
@@ -35,5 +35,5 @@ RUN php artisan key:generate
 # Expose port for Render
 EXPOSE 10000
 
-# Start Laravel
+# Start Laravel server
 CMD php artisan serve --host=0.0.0.0 --port=10000
