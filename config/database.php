@@ -114,6 +114,7 @@ return [
         ],
         'mongodb' => [
             'driver'   => 'mongodb',
+            'dsn'      => env('DB_URI'), // Use full connection string for Atlas
             'host'     => env('DB_HOST', '127.0.0.1'),
             'port'     => env('DB_PORT', 27017),
             'database' => env('DB_DATABASE'),
